@@ -5,6 +5,11 @@
    ```
    chmod 400 <KEY_NAME>.pem
    ```
+2. Terraform version used
+   ```
+   $ terraform -version
+     Terraform v1.3.6
+   ```
 ## Provisiong elk stack
 ```
 $ terraform init
@@ -20,7 +25,7 @@ var.key_name
 
   Enter a value: <KEY_NAME>
 ```
-After it is successfully provisioned, it outputs elasticsearch ip and kibana ip to access
+After it is successfully provisioned, it outputs elasticsearch ip and kibana ip to access.
 ```
 elasticsearch_ip_addr = "<ELASTICSEARCH_PUBLIC_IP>:9200"
 kibana_ip_addr = "<KIBANA_PUBLIC_IP>:5601"

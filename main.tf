@@ -84,9 +84,31 @@ resource "aws_security_group" "elasticsearch_sg" {
   }
 }
 
+data "aws_ami" "redhat" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10*"]
+  }
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 resource "aws_instance" "elastic_nodes" {
   count = 3
-  ami                    = var.ami_id
+  ami                    = data.aws_ami.redhat.id
   instance_type          = var.instance_type
   subnet_id = aws_subnet.elastic_subnet[local.az_name[count.index]].id
   vpc_security_group_ids = [aws_security_group.elasticsearch_sg.id]
@@ -188,7 +210,7 @@ resource "aws_instance" "kibana" {
   depends_on = [ 
     null_resource.start_es
    ]
-  ami                    = var.ami_id
+  ami                    = data.aws_ami.redhat.id
   instance_type          = var.instance_type
   subnet_id = aws_subnet.elastic_subnet[local.az_name[0]].id
   vpc_security_group_ids = [aws_security_group.kibana_sg.id]
@@ -280,7 +302,7 @@ resource "aws_instance" "logstash" {
   depends_on = [ 
     null_resource.install_kibana
    ]
-  ami                    = var.ami_id
+  ami                    = data.aws_ami.redhat.id
   instance_type          = var.instance_type
   subnet_id = aws_subnet.elastic_subnet[local.az_name[0]].id
   vpc_security_group_ids = [aws_security_group.logstash_sg.id]
@@ -363,7 +385,7 @@ resource "aws_instance" "filebeat" {
   depends_on = [ 
     null_resource.install_logstash
    ]
-  ami                    = var.ami_id
+  ami                    = data.aws_ami.redhat.id
   instance_type          = var.instance_type
   subnet_id = aws_subnet.elastic_subnet[local.az_name[0]].id
   vpc_security_group_ids = [aws_security_group.filebeat_sg.id]

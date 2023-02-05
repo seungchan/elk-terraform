@@ -47,4 +47,12 @@ EC2 /var/log  --> Filebeat --> Logstash --> ElasticSearch --> Kibana
    ```
    message:This log is generated from ec2. Some more log cloud.instance.id:i-0461888750237b362 cloud.image.id:ami-04d29b6f966df1537 cloud.provider:aws  cloud.machine.type:t2.medium cloud.availability_zone:us-east-1a cloud.account.id:746252282333 cloud.region:us-east-1 ecs.version:1.1.0 log.offset:0 log.file.path:/var/log/demo.log @version:1 input.type:log host.containerized:false host.name:ip-172-20-10-80.ec2.internal host.os.name:Amazon Linux host.os.codename:Karoo host.os.version:2 host.os.family:redhat
    ```
-
+4. Query elasticsearch index
+   When query the below
+   ```
+   http://<elasticsearch_ip>:9200/_cat/indices
+   ```
+   You should see logstash index in the result.
+   ```
+   green open logstash                 NkEYS1JgTMCbx5EV-Y2s6Q 1 1 877 0  1.1mb 568.6kb
+   ```

@@ -4,12 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "ami_id" {
-  description = "AMI ID for EC2 instances"
-  type        = string
-  default     = "ami-04d29b6f966df1537"
-}
-
 variable "instance_type" {
   description = "The type of EC2 instance to launch"
   type        = string

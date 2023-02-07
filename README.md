@@ -40,8 +40,8 @@ $ terraform destroy
 # Flow of logging
 EC2 /var/log/*  --> Filebeat --> Logstash --> ElasticSearch --> Kibana
 
-1. Filebeat greps logs from /var/log directory, and send to Logstash
-   i.e., create a log file named demo.log with some content.
+1. Filebeat greps logs from /var/log directory, and send to Logstash.
+   In order to see how it work, create a log file named demo.log with some content.
    ```
    $ echo "This log is generated from ec2. Some more log" > /var/log/demo.log
    ```
